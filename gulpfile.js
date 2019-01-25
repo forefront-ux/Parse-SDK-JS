@@ -27,11 +27,15 @@ var PRESETS = {
     "targets": { "node": "8" }
   }]],
   'react-native': ['@babel/preset-react'],
+  'wx-miniprogram': [["@babel/preset-env", {
+    "targets": "> 0.25%, not dead"
+  }], '@babel/preset-react']
 };
 var PLUGINS = {
   'browser': [transformRuntime, '@babel/plugin-transform-flow-comments', '@babel/plugin-proposal-class-properties', 'inline-package-json', 'transform-inline-environment-variables'],
   'node': ['@babel/plugin-transform-flow-comments', 'inline-package-json', 'transform-inline-environment-variables'],
   'react-native': ['@babel/plugin-transform-flow-comments', 'inline-package-json', 'transform-inline-environment-variables'],
+  'wx-miniprogram': [transformRuntime, '@babel/plugin-transform-flow-comments', '@babel/plugin-proposal-class-properties', 'inline-package-json', 'transform-inline-environment-variables']
 };
 
 var DEV_HEADER = (

@@ -12,6 +12,8 @@ echo "Node.js Release:"
 PARSE_BUILD=node gulp compile
 echo "React Native Release:"
 PARSE_BUILD=react-native gulp compile
+echo "Wx Mini Program Release:"
+PARSE_BUILD=wx-miniprogram gulp compile
 echo "Bundling and minifying for CDN distribution:"
 gulp browserify
 gulp minify
