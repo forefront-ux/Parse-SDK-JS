@@ -8,7 +8,7 @@
  *
  * @flow
  */
-/* global XMLHttpRequest, XDomainRequest */
+/* global XMLHttpRequest, XDomainRequest, wx */
 import CoreManager from './CoreManager';
 import ParseError from './ParseError';
 
@@ -71,10 +71,55 @@ function ajaxIE9(method: string, url: string, data: any) {
   });
 }
 
+var useWxRequest = false;
+if (wx && typeof wx.request !== 'undefined') {
+  useWxRequest = true;
+}
+
+function wxRequest(method: string, url: string, payloadString: string) {
+  return new Promise((resolve, reject) => {
+    var payload = JSON.parse(payloadString);
+    var headers = {};
+    headers["content-type"] = "application/json";
+    headers["X-Parse-Application-Id"] = payload._ApplicationId;
+    delete payload._ApplicationId;
+    if (payload._JavaScriptKey) {
+      headers["X-Parse-JavaScript-Key"] = payload._JavaScriptKey;
+      delete payload._JavaScriptKey;
+    }
+    if (payload._MasterKey) {
+      headers["X-Parse-Master-Key"] = payload._MasterKey;
+      delete payload._MasterKey;
+    }
+    // wx request document
+    // https://developers.weixin.qq.com/miniprogram/en/dev/api/network-request.html#wxrequestobject
+    wx.request({
+      url: url,
+      data: payload,
+      header: headers,
+      method: method,
+      success: function(response) {
+        var res = (response.header && response.header['X-Parse-Job-Status-Id']) || response.data;
+        resolve({
+          response: res,
+          status: response.statusCode
+        });
+      },
+      fail: function(err) {
+        reject(err);
+      }
+    });
+  });
+}
+
 const RESTController = {
   ajax(method: string, url: string, data: any, headers?: any) {
     if (useXDomainRequest) {
       return ajaxIE9(method, url, data, headers);
+    }
+
+    if (useWxRequest) {
+      return wxRequest(method, url, data);
     }
 
     var res, rej;
