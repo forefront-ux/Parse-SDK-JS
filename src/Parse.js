@@ -11,8 +11,8 @@ import decode from './decode';
 import encode from './encode';
 import CoreManager from './CoreManager';
 import InstallationController from './InstallationController';
-import * as ParseOp from './ParseOp';
 import RESTController from './RESTController';
+import * as ParseOp from './ParseOp';
 
 /**
  * Contains all Parse API classes and functions.
@@ -164,12 +164,8 @@ Parse.User = require('./ParseUser').default;
 Parse.LiveQuery = require('./ParseLiveQuery').default;
 Parse.LiveQueryClient = require('./LiveQueryClient').default;
 
-Parse._request = function(...args) {
-  return CoreManager.getRESTController().request.apply(null, args);
-};
-Parse._ajax = function(...args) {
-  return CoreManager.getRESTController().ajax.apply(null, args);
-};
+Parse._request = RESTController.request;
+Parse._ajax = RESTController.ajax;
 // We attempt to match the signatures of the legacy versions of these methods
 Parse._decode = function(_, value) {
   return decode(value);
@@ -182,7 +178,6 @@ Parse._getInstallationId = function() {
 }
 
 CoreManager.setInstallationController(InstallationController);
-CoreManager.setRESTController(RESTController);
 
 if (process.env.PARSE_BUILD === 'node') {
   Parse.initialize = Parse._initialize;
