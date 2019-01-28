@@ -1,5 +1,5 @@
 {
-  "name": "parse",
+  "name": "@forefront/parse",
   "version": "2.1.0",
   "description": "The Parse JavaScript SDK",
   "homepage": "https://www.parse.com",
