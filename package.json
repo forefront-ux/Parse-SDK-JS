@@ -3,6 +3,8 @@
   "version": "2.1.0",
   "description": "The Parse JavaScript SDK",
   "homepage": "https://www.parse.com",
+  "main": "lib/wx-miniprogram/Parse.js",
+  "miniprogram": "lib",
   "keywords": [
     "cloud",
     "mobile",
