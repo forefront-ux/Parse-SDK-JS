@@ -101,6 +101,32 @@ gulp.task('minify', function() {
     .pipe(gulp.dest('./dist'))
 });
 
+gulp.task('wxminiprogramify', function(cb) {
+  var stream = browserify({
+    builtins: ['_process', 'events'],
+    entries: 'lib/wx-miniprogram/Parse.js',
+    standalone: 'Parse'
+  })
+    .exclude('xmlhttprequest')
+    .ignore('_process')
+    .bundle();
+  stream.on('end', () => {
+    cb();
+  });
+  return stream.pipe(source('parse.js'))
+    .pipe(derequire())
+    .pipe(insert.prepend(DEV_HEADER))
+    .pipe(gulp.dest('./miniprogram_dist'));
+});
+
+gulp.task('minifywx', function() {
+  return gulp.src('miniprogram_dist/parse.js')
+    .pipe(uglify())
+    .pipe(insert.prepend(FULL_HEADER))
+    .pipe(rename({ extname: '.min.js' }))
+    .pipe(gulp.dest('./miniprogram_dist'))
+});
+
 gulp.task('watch', function() {
   return watch('src/*.js', { ignoreInitial: false, verbose: true })
     .pipe(babel({

@@ -13,4 +13,4 @@ test_logs
 out/
 docs/
 .eslintcache
-
+/miniprogram_dist

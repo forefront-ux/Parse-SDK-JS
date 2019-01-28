@@ -17,3 +17,5 @@ PARSE_BUILD=wx-miniprogram gulp compile
 echo "Bundling and minifying for CDN distribution:"
 gulp browserify
 gulp minify
+gulp wxminiprogramify
+gulp minifywx

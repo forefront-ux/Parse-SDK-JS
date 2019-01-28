@@ -45,6 +45,11 @@ var AsyncStorage = require('react-native').AsyncStorage;
 Parse.setAsyncStorage(AsyncStorage);
 ```
 
+For Wx Mini Program, include `'parse/wx-miniprogram'`;
+```js
+var Parse = require('parse/wx-miniprogram');
+```
+
 ## Upgrading to Parse SDK 2.0.0
 
 With Parse SDK 2.0.0, gone are the backbone style callbacks and Parse.Promises.
