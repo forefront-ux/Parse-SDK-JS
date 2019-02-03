@@ -1,6 +1,6 @@
 {
   "name": "@forefront/parse",
-  "version": "2.1.1",
+  "version": "2.1.2",
   "description": "The Parse JavaScript SDK",
   "homepage": "https://www.parse.com",
   "main": "miniprogram_dist/parse.js",
