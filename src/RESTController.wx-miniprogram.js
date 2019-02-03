@@ -28,7 +28,7 @@ export type FullOptions = {
 };
 
 const RESTController = {
-  ajax(method: string, url: string, data: any, headers?: any) {
+  ajax(method: string, url: string, payloadString: any, headers?: any) {
     var res, rej;
     var promise = new Promise((resolve, reject) => { res = resolve; rej = reject; });
     promise.resolve = res;
@@ -46,6 +46,14 @@ const RESTController = {
     if (payload._MasterKey) {
       headers["X-Parse-Master-Key"] = payload._MasterKey;
       delete payload._MasterKey;
+    }
+    if (payload._ClientVersion) {
+      headers["X-Parse-Client-Version"] = payload._ClientVersion;
+      delete payload._ClientVersion;
+    }
+    if (payload._InstallationId) {
+      headers["X-Parse-Installation-Id"] = payload._InstallationId;
+      delete payload._InstallationId;
     }
 
     // wx request document
